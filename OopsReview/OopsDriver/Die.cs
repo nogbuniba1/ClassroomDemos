@@ -30,8 +30,9 @@ namespace OopsDriver
         //Properties can be fully implemented. They don't have parameters:
         // - a private data member
         // - a public property
-        private int _Sides;
-        public int Sides
+        // - the name of the datemember doesn't have to be the same with the property.
+        private int _Sides; //data member
+        public int Sides    //property
         {
             get
             {
@@ -49,10 +50,43 @@ namespace OopsDriver
             }
         }
 
+
         ///Properties can be auto implemented
         // does not have a private data member 
         // the system creates an internal data storage member for the property
-
         public int FaceValue { get; set; }
+
+        //Within a property, you can validate that the incoming data value is "what is expected"
+
+        private string _Color;
+        public string Color
+        {
+            get
+            {
+                return _Color;
+            }
+            set
+            {
+                //sample validation - there MUST be date within the incoming value
+                //so an empty string is invalid
+                if(string.IsNullOrEmpty(value)) //The .IsNullOrEmpty catches string == " " and string == null
+                {
+                    //incoming data value is incorrect
+                    //a) you could send an error message to the outside user
+                    //throw new Exception("Color must have a value");
+
+                    //OR
+
+                    //b) you could allow the storage of a null value within the string data member
+                    _Color = null;
+                }
+                else
+                {
+                    _Color = value;
+                }
+                
+            }
+        }
+
     }
 }
