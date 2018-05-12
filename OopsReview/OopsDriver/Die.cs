@@ -24,9 +24,10 @@ namespace OopsDriver
         //d) Behaviours (Method)
 
         // Data members may be private for the class for use only within the class
-
         // The interface with a class is done via properties and behaviours
 
+
+        //PROPERTIES
         //Properties can be fully implemented. They don't have parameters:
         // - a private data member
         // - a public property
@@ -58,8 +59,8 @@ namespace OopsDriver
 
         //Within a property, you can validate that the incoming data value is "what is expected"
 
-        private string _Color;
-        public string Color
+        private string _Color; //data member
+        public string Color //property
         {
             get
             {
@@ -88,5 +89,35 @@ namespace OopsDriver
             }
         }
 
+
+
+        //CONSTRUCTORS
+        //Constructors are NOT directly called by the outside user
+        //Constructors are called indirectly when the outside user creates an instance of the class
+        //To create an instance of the class, the ootside user will declare --> class variableName = new class();
+        //It is the "new" that calles the constructor, you may or may not have a constructor for your class 
+        //If you do not code a constructor for your class, then the default system constuctor is executed
+        //This default system constructor initializes your local data memeber to their default C# value (Default for numeric = 0, string = null, boolean is False)
+
+
+        //If you code a constructor for your class then, you are responsible for all/any constructor in the class
+
+        //"DEFAULT" CONSTRUCTOR
+        //This constructor is similar to the system constructor
+        //This constructor would be called for  --> new classname();
+        public Die()
+        {
+
+        }
+
+        //"GREEDY" CONSTRUCTOR
+        //This constructor usually receives a list of parameter, one for each data member in the class
+        //The constructor takes the parameter values and assigns the value to the appropriate data member
+        //This constructor would be called for ---> new classname(value1, value2.....)
+        public Die(int sides, string color)
+        {
+            Sides = sides; //The set{} of the property sides is used. The set is on the left side
+            Color = color;
+        }
     }
 }
