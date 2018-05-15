@@ -124,6 +124,7 @@ namespace OopsDriver
         {
             Sides = sides; //The set{} of the property sides is used. The set is on the left side
             Color = color;
+            Roll();
         }
 
         //BEHAVIOURS
