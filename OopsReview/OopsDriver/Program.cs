@@ -105,7 +105,7 @@ namespace OopsDriver
                     case "X":
                         {
                             //display summary results of the game
-                            int[] counts = new int[] { 0, 0, 0 }; //OR = new int[3]
+                            int[] counts = new int[] {0, 0, 0}; //OR = new int[3]
                             foreach (var aturn in gameTurns)
                             {
                                 if (aturn.TurnWinner.Equals("Player1"))
