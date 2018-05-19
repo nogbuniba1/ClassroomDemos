@@ -6,15 +6,23 @@
 @section banner{
     <h1>Hello</h1>
 }
-<p>
-    This text is not in a section on the content page. Therefore, this text is put in the RenderBody area of the layout page.
-</p>
-<p>
-    Any html tag that is not in a section, defaults to the RenderBody
-</p>
-<p>
-    Any name starting with "_" such as "_LayoutPage", the system will not let you open in browser directly from the page
-</p>
-
+    <div class="row">
+        <div class="col-md-4">
+            <p>
+                This text is not in a section on the content page. Therefore, this text is put in the RenderBody area of the layout page. Any html tag that is not in a section, defaults to the RenderBody.
+                NOTE: Any name starting with "_" such as "_LayoutPage", the system will not let you open in browser directly from the page
+            </p>
+        </div>
+        <div class="col-md-2">
+            <p>
+                This text is not in a section on the content page. Therefore, this text is put in the RenderBody area of the layout page. Any html tag that is not in a section, defaults to the RenderBody.
+            </p>
+        </div>
+        <div class="col-md-6">
+            <p>
+                This text is not in a section on the content page. Therefore, this text is put in the RenderBody area of the layout page. Any html tag that is not in a section, defaults to the RenderBody.
+            </p>
+        </div>
+    </div>
 @section footer{
     <p>&copy; CPSC1517 NAIT Today's Date is @DateTime.Today.ToLongDateString() </p>}
