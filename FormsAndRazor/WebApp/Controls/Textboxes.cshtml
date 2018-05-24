@@ -1,9 +1,53 @@
 ﻿@{
     Page.Title = "Textboxes";
     Layout = "~/_LayoutPage.cshtml";
+
+    //The syntax is typically C#
+    //Access to an input control will be by the name parameter on the control.
+    //Since we are using c#, that means things are case sensitive
+    //To access/reference the control, use the object request and the property reference
+    //   .Form["xxx"] where xxx is the value of the name parameter data that is coming from the form is of datatype string
+    //Place your incoming data into a variable for access by this page
+    var controlvariablename = Request.Form["controlname"];
+    var whichbutton = Request.Form["formbutton"];
 }
 
 @section banner{
     <h1>Textboxes</h1>
 }
 
+<div>
+    <!--One can use the post flag to determine your logic. 
+        The first time the page is referenced, the value of the flag is FALSE.
+        If you remain on this page, the value of the flag will be true-->
+    
+   @if(IsPost)
+    {
+        <!-- To access a local variable within your html text, you will place the "at" symbol in front of the variable name-->
+        if (string.IsNullOrEmpty(controlvariablename))
+        {
+            <p>You didn't enter any data in the field!</p>;
+       }
+       else
+       {
+           if(whichbutton.Equals("data"))
+           {
+               <p>You entered &gt; @controlvariablename &lt;</p>
+           }
+           else
+           {
+               <p>You entered &gt; @controlvariablename &lt; which has a length of @controlvariablename.Length</p>
+           }
+            
+        }
+        
+    }
+    
+    <form id="theForm" action="" method="post">
+        <label for="forcontrolname">Field Label:</label>
+        <input type="text" id="controlname" name="controlname" value="@controlvariablename" placeholder="Enter your name"/> <br/> <!--"Value" holds the last information inputed in the field-->
+        <button type="submit" id="formbutton" name="formbutton" class="btn btn-primary" value="data">Show Data</button>
+        <button type="submit" id="formbutton" name="formbutton" class="btn" value="Length">Show Data Length </button>
+                
+    </form>
+</div>
