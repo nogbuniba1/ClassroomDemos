@@ -1,9 +1,60 @@
 ﻿@{
     Page.Title = "DropdownList";
     Layout = "~/_LayoutPage.cshtml";
+
+    var choice = Request.Form["CodingSamples"];
 }
 
 @section banner{
     <h1>Dropdown List</h1>
 }
 
+
+<div>
+    @if(IsPost)
+    {
+        switch(choice.ToUpper())
+        {
+            case "TEXTBOXES":
+                {
+                    //use the response object's method Redirect("page name") to send the user to the specific page
+                    //Use relative addressing in referencing your page
+                    Response.Redirect("Textboxes.cshtml");
+                    break;
+                }
+            case "RADIOBUTTONLIST":
+                {
+                    Response.Redirect("RadioButtonList.cshtml");
+                    break;
+                }
+            case "CHECKBOXES":
+                {
+                    Response.Redirect("CheckBoxes.cshtml");
+                    break;
+                }
+            default:
+                {
+                    //This default is a message if the prompt line is the current option choice
+                    <p><span style="color:firebrick">Make a selection from list</span></p>
+                    break;
+                }
+        }
+    }
+    <form id="theForm" action="" method="post">
+        <div class="col-md-offset-1">
+            <label id="forCodingSamples"> Select the sample to view </label><br />
+            <!--The select tag is used to create the dropdown control. Each item in the control is specified using the option tag.
+        To set an item to be the selected item, use the option tag parameter selected.
+        If no item has been selected, then the first option is the default that shows
+        Often you will see that the first choice is a prompt from the control. This is referred to as Prompt Line-->
+            <select name="CodingSamples">
+                <option value=""> Select...</option>
+                <option value="TextBoxes"> TextBoxes</option>
+                <option value="CheckBoxes">CheckBoxes</option>
+                <option value="RadioButtonList"> RadioButton</option>
+            </select>
+            <button type="submit" name="formButton" value="submit" class="btn btn-primary"> Submit</button>
+        </div>
+
+    </form>
+</div>
