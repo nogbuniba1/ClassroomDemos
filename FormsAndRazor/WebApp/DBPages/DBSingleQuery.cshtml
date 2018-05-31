@@ -1,0 +1,83 @@
+﻿@{
+    Page.Title = "DB Single Query";
+    Layout = "~/_LayoutPage.cshtml";
+
+    //Variables that are coded in the opening code block are know through out the entire page
+    var searchaug = Request.Form["SearchAug"];
+    var formbutton = Request.Form["formButton"];
+    string regionid = "";
+    string regiondescription = "";
+
+    //Process the SQL Query
+    //Open a connection to the desired datbase, this is done via the connection string config
+    var db = Database.Open("NWDB");
+
+    //Create SQL Command
+    //Since the search value changes depending on what the user entered, the command search value needs to be changeable. 
+    //So to do this flexibility, we use a placeholder(@n) in you hard coded commnad string, where n starts at 0,1,2....
+    var sqlcommand = "SELECT RegionID, RegionDescription " + "FROM Region " + " WHERE RegionID = @0 ";
+
+    //Execute the SQL Command against the connected database
+    //QuerySingle() is used when there is 0 or 1 record expected from the database
+    //Query() is used when there is 0, 1 or more record(s) expected from the database
+    //QueryValue() is used when a single value is expected from the database
+    var results = db.QuerySingle(sqlcommand, searchaug);
+
+}
+
+@section banner{
+    <h1>Database: Single Query</h1>
+}
+
+<div>
+    @if(IsPost)
+    {
+        if(formbutton.Equals("reset"))
+        {
+            searchaug = "";
+            regionid = "";
+            regiondescription = "";
+
+        }
+        else
+        {
+            //To test for bo data results for QuerySingle(), test for null
+            if(results == null)
+            {
+                <p><span style="color:firebrick">No region with the ID of @searchaug</span></p>
+            }
+            else
+            {
+                //Record was found. Move the values from the results to the local var fields
+                //Method One: Use an index on your results variable, 
+                //      NUMERICS need to be converted to STRINGS.
+                regionid = results[0].ToString();
+
+                //Method Two: Use the property in your results object to reference the data
+                //      the property name is your SQL query results column title
+                regiondescription = results.RegionDescription;
+            }
+        }
+    }
+
+    <form id="theForm" action="" method="post">
+        <div class="col-md-3">
+            <label id="forSearchAug">Enter a Region ID: </label>
+            <input type="text" id="SearchAug" name="SearchAug" value="@searchaug" placeholder="Enter region ID" />  <!--id is used in Javascript and name is used by Request.Form-->
+            <br /><br />
+
+            <button type="submit" name="formButton" id="formButton" value="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" name="formButton" id="formButton" value="reset" class="btn">Clear</button>
+        </div>
+        <div class="col-md-4">
+            <label id="forRegionID">Region ID: </label>
+            <input type="text" id="RegionID" name="RegionID" value="@regionid" />
+            <br/>
+
+            <label id="forRegionDescription">Region Description: </label>
+            <input type="text" id="RegionDescription" name="RegionDescription" value="@regiondescription" />
+        </div>
+    </form>
+</div>
+
+
