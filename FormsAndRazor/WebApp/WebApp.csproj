@@ -113,6 +113,8 @@
     <Content Include="Controls\DropdownList.cshtml" />
     <Content Include="Controls\Checkboxes.cshtml" />
     <Content Include="DBPages\DBSingleQuery.cshtml" />
+    <Content Include="DBPages\MultiRecordQuery.cshtml" />
+    <Content Include="DBPages\WebGridPage.cshtml" />
     <None Include="packages.config" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />

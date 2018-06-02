@@ -1,0 +1,55 @@
+﻿@{
+    Page.Title = "Filter Lookup";
+    Layout = "~/_LayoutPage.cshtml";
+
+    //Obtain a list of the categories from the database into a variable "collection"
+    var db = Database.Open("NWDB");     //If you forget, go to WebConnectionString file for the Database name
+    var querycommand = "SELECT CategoryID, CategoryName " + "FROM Categories " + "ORDER BY CategoryName " ;
+    var infolist = db.Query(querycommand);
+}
+
+@section banner{
+    <h1>Database: Filter Multi-Record Query</h1>
+}
+
+<div class="col-md-offset-4">
+
+    @if(IsPost)
+    {
+        var categorychoice = Request.Form["CategoryList"];
+
+        //If you have a prompt line, check to see if that was the user's choice. If so, issue a directing message to the user
+        if(categorychoice == "0")
+        {
+            <p><span style="color:firebrick">No category is selected!!! Select one to complete a search</span></p>
+        }
+        else
+        {
+            //pass the category code to another page. Use Response.Redirect() to do this action
+            //REMEMBER - The Data will appear in your URL, so DO NOT Pass sensitive data
+            //Response.Redirect("pagename.cshtml?parameterid=value&anotherparameterid=anothervalue");
+            //Response.Redirect("WebGridPage.cshtml?cid=" + categorychoice + "&aid=" + applechoice 
+            Response.Redirect("WebGridPage.cshtml?cid=" + categorychoice);
+        }
+    }
+    <form id="theForm" action="" method="post">
+        <label id="forCategoryList"> Select Category</label>
+        <select id="CategoryList" name="CategoryList">
+            <option value="0">Select...</option>
+            @foreach(var item in infolist)
+            {
+                //Loop through the collection of records in infolist
+                //Create a lin in the dropdownlist for each item in the collection (infolist)
+                //Referencing of the data value in the item is donr using EITHER
+                        // a) an index such as item[3] which references column 4
+                        // b) by property name of the collection such as item.xxxxxx
+                //Both methods can be used in the process at the same time
+
+             <option value="@item[0]">@item.CategoryName</option>
+            }
+        </select>
+        <button type="submit" name="formButton" id="formButton" value="submit" class="btn btn-primary">Get Products</button>
+    </form>
+</div>
+
+
