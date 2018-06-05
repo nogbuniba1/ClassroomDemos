@@ -115,6 +115,7 @@
     <Content Include="DBPages\DBSingleQuery.cshtml" />
     <Content Include="DBPages\MultiRecordQuery.cshtml" />
     <Content Include="DBPages\WebGridPage.cshtml" />
+    <Content Include="DBPages\WebGridDestination.cshtml" />
     <None Include="packages.config" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -133,6 +134,7 @@
     </None>
     <Content Include="_LayoutPage.cshtml" />
     <Content Include="WebConnectionString.config" />
+    <Content Include="_Menu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Web.config" />
