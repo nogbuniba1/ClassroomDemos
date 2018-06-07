@@ -116,6 +116,7 @@
     <Content Include="DBPages\MultiRecordQuery.cshtml" />
     <Content Include="DBPages\WebGridPage.cshtml" />
     <Content Include="DBPages\WebGridDestination.cshtml" />
+    <Content Include="DBPages\Insert.cshtml" />
     <None Include="packages.config" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
