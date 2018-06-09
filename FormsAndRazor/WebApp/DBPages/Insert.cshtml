@@ -4,8 +4,8 @@
     var thebutton = Request.Form["formButton"];
 
     var productname = "";
-    var supplierid = "";
-    var categoryid = "";
+    var supplierid = "0"; //The value '0' points to the prompt line
+    var categoryid = "0";
     var quantityperunit = "";
     var unitprice = "";
     var unitsinstock = "";
@@ -18,10 +18,10 @@
     var db = Database.Open("NWDB");
 
     var supplierquery = "SELECT SupplierID, CompanyName "
-                        + "FROM Supplier "
+                        + "FROM Suppliers "
                         + "ORDER BY 2 ";
     var categoryquery = "SELECT CategoryID, CategoryName "
-                        + "FROM Category "
+                        + "FROM Categories "
                         + "ORDER BY 2 ";
 
     var supplierlist = db.Query(supplierquery);
@@ -66,22 +66,26 @@
             //add this data to the database
             try
             {
-                //Connect to DB
-                var db = Database.Open("NWDB");
+                ////Connect to DB
+                //var db = Database.Open("NWDB");
 
                 //Setup the Command
                 var insertcommand = "INSERT INTO Products (ProductName, SupplierID, CategoryID, QuantityPerUnit, UnitPrice, UnitsInStock, UnitsOnOrder, ReOrderLevel, Discontinued) "
                                         + "Values (@0, @1, @2, @3, @4, @5, @6, @7, @8) ";
 
                 //Execute Command
-                db.Execute(insertcommand, productname, string.IsNullOrEmpty(supplierid) ? null : supplierid,
-                    string.IsNullOrEmpty(categoryid) ? null : categoryid,
-                    string.IsNullOrEmpty(quantityperunit) ? null : quantityperunit,
-                    string.IsNullOrEmpty(unitprice) ? null : unitprice,
-                    string.IsNullOrEmpty(unitsinstock) ? null : unitsinstock,
-                    string.IsNullOrEmpty(unitsonorder) ? null : unitsonorder,
-                    string.IsNullOrEmpty(reorderlevel) ? null : reorderlevel,
-                    0); // 0 cause discontinued needs to be zero
+                    // Because the select tag will always have a value, you can no longer use IsNullOrEmpty(this is a textbox test). 
+                    //Instead you will need to test for the particular value.Equals("xxx")
+
+            db.Execute(insertcommand, productname,
+            supplierid.Equals("0") ? null : supplierid,
+            categoryid.Equals("0") ? null : categoryid,
+            string.IsNullOrEmpty(quantityperunit) ? null : quantityperunit,
+            string.IsNullOrEmpty(unitprice) ? null : unitprice,
+            string.IsNullOrEmpty(unitsinstock) ? null : unitsinstock,
+            string.IsNullOrEmpty(unitsonorder) ? null : unitsonorder,
+            string.IsNullOrEmpty(reorderlevel) ? null : reorderlevel,
+            0); // 0 cause discontinued needs to be zero
                 <p class="col-sm-12 text-center"><span style="color:green"><strong>Product was added!</strong></span></p>
             }
             catch(Exception ex)
@@ -96,20 +100,51 @@
     <form id="theForm" action="" method="post">
         <div class="row">
             <div class="col-sm-5 text-right">
-                <label id="forProductName">Name</label><br />
-                <label id="forSuplierID">Supplier</label><br />
-                <label id="forCategoryID">Category</label><br />
-                <label id="forQuantityPerUnit">Size</label><br />
-                <label id="forUnitPrice">Price</label><br />
-                <label id="forUnitsInStock">QOH</label><br />
-                <label id="forUnitsOnOrder">QOO</label><br />
-                <label id="forReOrderLevel">ROL</label><br />
-                <label id="forDiscontinued">Disc</label><br />
+                <label id="ProductName">Name</label><br />
+                <label id="SupplierID">Supplier</label><br />
+                <label id="CategoryID">Category</label><br />
+                <label id="QuantityPerUnit">Size</label><br />
+                <label id="UnitPrice">Price</label><br />
+                <label id="UnitsInStock">QOH</label><br />
+                <label id="UnitsOnOrder">QOO</label><br />
+                <label id="ReOrderLevel">ROL</label><br />
+                <label id="Discontinued">Disc</label><br />
             </div>
             <div class="col-sm-7">
                 <input name="ProductName" type="text" value="@productname" title="Enter Product Name" placeholder="Product Name" /><br />
-                <input name="SuplierID" type="text" value="@supplierid" title="Enter Suplier ID" placeholder="SuplierID" /><br />
-                <input name="CategoryID" type="text" value="@categoryid" title="Enter Category ID" placeholder="CategoryID" /><br />
+                <select id="SupplierID" name="SupplierID">
+                    <option value="0">Select...</option>
+                    @foreach (var item in supplierlist)
+                    {
+                        //We need to determine based on the previous selected row, which row to set as selected.
+                        //the request.Form["xxxx"] obtains the posted select value from the user (under IsPost)
+                        //By the time the processor gets to this code, a particular supplier ID value will exist
+                        if(item.SupplierID.ToString() == supplierid)
+                        {
+                            <option value="@item[0]" selected>@item.CompanyName</option>
+                        }
+                        else
+                        {
+                            <option value="@item[0]">@item.CompanyName</option>
+                        }
+                        
+                    }
+                </select><br />
+                <select id="CategoryID" name="CategoryID">
+                    <option value="0">Select..</option>
+                    @foreach(var item in categorylist)
+                    {
+                        if(item.CategoryID.ToString() == categoryid)
+                        {
+                            <option value="@item[0]" selected>@item.CategoryName</option>
+                        }
+                        else
+                        {
+                            <option value="@item[0]">@item.CategoryName</option>
+                        }
+                        
+                    }
+                    </select><br />
                 <input name="QuantityPerUnit" type="text" value="@quantityperunit" title="Enter Quantity Per Unit" placeholder="Quantity Per Unit" /><br />
                 <input name="UnitPrice" type="text" value="@unitprice" title="Enter Unit Price" placeholder="Unit Price" /><br />
                 <input name="UnitsInStock" type="text" value="@unitsinstock" title="Enter Units In Stock" placeholder="Units In Stock" /><br />
