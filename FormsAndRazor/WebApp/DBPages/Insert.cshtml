@@ -26,6 +26,41 @@
 
     var supplierlist = db.Query(supplierquery);
     var categorylist = db.Query(categoryquery);
+
+    //these are some server side validation controls
+    //www.mikesdotnetting.com/article/191/validation-in-Raxor-web-pages-2
+
+    //required with stringlength check
+    //syntax
+    //Validation.Add("controlname",
+    //   Validator.xxxxx(parameters)[,Validator.yyyyy(parameters)...);
+
+    Validation.Add("ProductName",
+        Validator.Required("Product Name is required"),
+        Validator.StringLength(40, 1, "Product name is limited to 40 characters"));
+    Validation.Add("QuantityPerUnit",
+        Validator.StringLength(20, 0, "quantity per unit is limited to 20 characters"));
+    Validation.Add("UnitPrice",
+        Validator.Range(0.00, double.MaxValue, "Unit price must be 0 or greater"));
+    Validation.Add("UnitsInStock",
+        Validator.Range(0, Int16.MaxValue, "Units in stock must be between 0 and 32767"));
+    Validation.Add("UnitsOnOrder",
+        Validator.Range(0, Int16.MaxValue, "Units on order must be between 0 and 32767"));
+    Validation.Add("ReorderLevel",
+        Validator.Range(0, Int16.MaxValue, "Reorder level must be between 0 and 32767"));
+
+    //there are no field for these examples on the product from
+
+    //Password validation
+    //Validation.Add("NewPassword",
+    //    Validator.Required("Missing new password"),
+    //    Validator.StringLength(40,6,"Invalid new password"),
+    //    Validator.EqualsTo("ConfirmPassword", "New password not confirmed."));
+
+    //Postal Code (pattern test)
+    //Validation.Add("PostalCode",
+    //    Validator.Required("Missing postal code"),
+    //    Validator.Regex("[a-zA-Z][0-9][a-zA-Z][0-9][a-zA-Z][0-9]", "Postal code is invalid."));
 }
 
 @section banner{
@@ -44,7 +79,7 @@
 
     @if(IsPost)
     {
-        if(thebutton.Equals("clear"))
+        if (thebutton.Equals("clear"))
         {
             <p class="col-sm-12 text-center"> Cleared by User!!</p>
         }
@@ -63,38 +98,72 @@
             //If the checkbox IS Checked, the value returned is a string "on"
             discontinued = Request.Form["Discontinued"];
 
-            //add this data to the database
-            try
+            //for validation controls on the server side to ACTUALLY fire, you
+            //  MUST execute the Validation.IsValid() method.
+            if (Validation.IsValid())
             {
-                ////Connect to DB
-                //var db = Database.Open("NWDB");
+                //IF we ASSUME that a supplier and category are actually required
+                //   we could test that the prompt line is not the selected value
+                if (supplierid.Equals("0"))
+                {
+                    <p class="text-center"><span style="color:firebrick">
+                         Please select a supplier.</span></p>
+                }
+                else if (categoryid.Equals("0"))
+                {
+                    <p class="text-center"><span style="color:firebrick">
+                         Please select a category.</span></p>
+                }
+                else
+                {
+                    //add this data to the database
+                    try
+                    {
+                        ////Connect to DB
+                        //var db = Database.Open("NWDB");
 
-                //Setup the Command
-                var insertcommand = "INSERT INTO Products (ProductName, SupplierID, CategoryID, QuantityPerUnit, UnitPrice, UnitsInStock, UnitsOnOrder, ReOrderLevel, Discontinued) "
-                                        + "Values (@0, @1, @2, @3, @4, @5, @6, @7, @8) ";
+                        //Setup the Command
+                        var insertcommand = "INSERT INTO Products (ProductName, SupplierID, CategoryID, QuantityPerUnit, UnitPrice, UnitsInStock, UnitsOnOrder, ReOrderLevel, Discontinued) "
+                                                + "Values (@0, @1, @2, @3, @4, @5, @6, @7, @8) ";
 
-                //Execute Command
-                    // Because the select tag will always have a value, you can no longer use IsNullOrEmpty(this is a textbox test). 
-                    //Instead you will need to test for the particular value.Equals("xxx")
+                        //Execute Command
+                        // Because the select tag will always have a value, you can no longer use IsNullOrEmpty(this is a textbox test). 
+                        //Instead you will need to test for the particular value.Equals("xxx")
 
-            db.Execute(insertcommand, productname,
-            supplierid.Equals("0") ? null : supplierid,
-            categoryid.Equals("0") ? null : categoryid,
-            string.IsNullOrEmpty(quantityperunit) ? null : quantityperunit,
-            string.IsNullOrEmpty(unitprice) ? null : unitprice,
-            string.IsNullOrEmpty(unitsinstock) ? null : unitsinstock,
-            string.IsNullOrEmpty(unitsonorder) ? null : unitsonorder,
-            string.IsNullOrEmpty(reorderlevel) ? null : reorderlevel,
-            0); // 0 cause discontinued needs to be zero
-                <p class="col-sm-12 text-center"><span style="color:green"><strong>Product was added!</strong></span></p>
+                        db.Execute(insertcommand, productname,
+                        supplierid.Equals("0") ? null : supplierid,
+                        categoryid.Equals("0") ? null : categoryid,
+                        string.IsNullOrEmpty(quantityperunit) ? null : quantityperunit,
+                        string.IsNullOrEmpty(unitprice) ? null : unitprice,
+                        string.IsNullOrEmpty(unitsinstock) ? null : unitsinstock,
+                        string.IsNullOrEmpty(unitsonorder) ? null : unitsonorder,
+                        string.IsNullOrEmpty(reorderlevel) ? null : reorderlevel,
+                        0); // 0 cause discontinued needs to be zero
+                        <p class="col-sm-12 text-center"><span style="color:green"><strong>Product was added!</strong></span></p>
+                        }
+                    catch (Exception ex)
+                    {
+                        <p class="col-sm-12 text-center"><span style="color:firebrick"><strong>@ex.Message</strong></span></p>
+                    }
+                }
+
             }
-            catch(Exception ex)
-            {
-                <p class="col-sm-12 text-center"><span style="color:firebrick"><strong>@ex.Message</strong></span></p>
-            }
+
         }
     }
-     
+
+
+
+
+    <!-- displaying server side Validation control messages
+            this can be done in two ways.
+            a) using Html.ValidationSummary control
+               gives by default a bulletted list of all errors
+            b) beside the individual control using Html.ValidationMessage("xxxxxxx")
+                 where xxxxxx is the control name-->
+        @Html.ValidationSummary()
+        <!-- to view possible HTML 5 client side validation check out the url
+            www.w3.org/WAI/tutorials/forms/Validation-->
 
 
     <form id="theForm" action="" method="post">
