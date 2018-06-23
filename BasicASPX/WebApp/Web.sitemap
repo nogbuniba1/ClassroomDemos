@@ -10,6 +10,7 @@
     <siteMapNode url="" title="Samples" description="">
       <!---A siteMapNode here is an item on your dropdown menu-->
       <siteMapNode url="~/SamplePages/Hello.aspx" title="Hello"  description="" />
+      <siteMapNode url="~/SamplePages/BasicControls.aspx" title="Basic Controls"  description="" />
     </siteMapNode>
     <siteMapNode url="~/About.aspx" title="About"  description="" />
     <siteMapNode url="~/Contact.aspx" title="Contact"  description="" />

@@ -56,7 +56,15 @@
                         <li><a runat="server" href="~/Contact">Contact</a></li>
                         <li><a runat="server" href="~/SamplePages/Hello">Hello</a></li>
                     </ul>--%>
-                    <asp:Menu ID="Menu1" runat="server" DataSourceID="SiteMapNav"></asp:Menu>
+                    <asp:Menu ID="Menu1" runat="server" DataSourceID="SiteMapNav" 
+                        Orientation="Horizontal" 
+                        StaticDisplayLevels="1"
+                        StaticMenuStyle-CssClass="nav nav-bar-nav" 
+                        StaticSelectedStyle-CssClass="active" 
+                        DynamicMenuStyle-CssClass="dropdown-menu" 
+                        IncludeStyleBlock="false" EnableTheming="false" 
+                        EnableViewState="false">
+                    </asp:Menu>
                     <asp:SiteMapDataSource ID="SiteMapNav" runat="server" ShowStartingNode="false"/>
                 </div>
             </div>
