@@ -32,8 +32,8 @@ namespace WebApp.SamplePages
 
                 //Add data to the collection, one entry at a time
                 DataCollection.Add(new DDLClass(1, "COMP1008"));
-                DataCollection.Add(new DDLClass(2, "DMIT1508"));
-                DataCollection.Add(new DDLClass(3, "CPSC1517"));
+                DataCollection.Add(new DDLClass(3, "DMIT1508"));
+                DataCollection.Add(new DDLClass(2, "CPSC1517"));
                 DataCollection.Add(new DDLClass(4, "DMIT2018"));
 
                 //usually lists are sorted
@@ -68,8 +68,8 @@ namespace WebApp.SamplePages
             //Grab the content of various controls and manipulate the content of other controls
             //Controls have certain properties that can be access for obtaining and assigning values
 
-            //Textbox property: Text
-            string submitchoice = TextBoxNumberChoice.Text; //if the property is on the right of an equla sign , we are using the GET and vice versa will be the SET
+            //Textbox- property: Text
+            string submitchoice = TextBoxNumberChoice.Text; //if the property is on the right of an equal sign , we are using the GET and vice versa will be the SET
 
             if(string.IsNullOrEmpty(submitchoice))
             {
@@ -77,11 +77,34 @@ namespace WebApp.SamplePages
             }
             else
             {
-                //RadioButtonList Property: SelectedIndex, SelectedValue and SelectedItem
+                //RadioButtonList- Property: SelectedIndex, SelectedValue and SelectedItem
                 //SelectedIndex: returns the physical line index number
-                //*** SelectedValue: returns the data value associated with the physical line ***  --USED Most TImes
+                //*** SelectedValue: returns the data value associated with the physical line ***  --USED Most Times
                 //SelectedItem: returns the data display(text) associated with the physical line
                 RadioButtonListChoice.SelectedValue = submitchoice;
+
+                //Checkbox- property: Checked (Boolean)
+                if(submitchoice.Equals("2") || submitchoice.Equals("4"))
+                {
+                    CheckBoxChoice.Checked = true;
+                }
+                else
+                {
+                    CheckBoxChoice.Checked = false;
+                }
+
+                //DropdownList- Property: SelectedValue(preferred)
+                //                          :SelectedIndex
+                CollectionList.SelectedValue = submitchoice;
+
+
+                //Label (Or Literal)- Property: Text
+                //Demonstrate using SelectedValue, SelectedIndex and SelectedItem to obtain data from the dropdownlist
+                //The data will be concatenated into a single string
+
+                DisplayDataReadOnly.Text = CollectionList.SelectedItem.Text
+                         + " at index " + CollectionList.SelectedIndex.ToString()
+                         + " having a value of " + CollectionList.SelectedValue;
             }
         }
 
