@@ -95,6 +95,7 @@ namespace WebApp.SamplePages
 
                 //DropdownList- Property: SelectedValue(preferred)
                 //                          :SelectedIndex
+                //                          :SelectedItem
                 CollectionList.SelectedValue = submitchoice;
 
 
@@ -110,7 +111,35 @@ namespace WebApp.SamplePages
 
         protected void LinkButtonSubmitChoice_Click(object sender, EventArgs e)
         {
-            MessageLabel.Text = "You pressed the Submit Choice Link Button! ";
+            if (CollectionList.SelectedIndex == 0)
+            {
+                MessageLabel.Text = "Please select a course!";
+            }
+            else
+            {
+                //DropdownList Property: SelectedValue(preferred)
+                string ddlselection = CollectionList.SelectedValue;
+
+
+                //Text box
+                TextBoxNumberChoice.Text = ddlselection;
+
+                //Radio Button
+                RadioButtonListChoice.SelectedValue = ddlselection;
+                if (ddlselection.Equals("2") || ddlselection.Equals("4"))
+                {
+                    CheckBoxChoice.Checked = true;
+                }
+                else
+                {
+                    CheckBoxChoice.Checked = false;
+                }
+
+                //Display field
+                DisplayDataReadOnly.Text = CollectionList.SelectedItem.Text
+                             + " at index " + CollectionList.SelectedIndex.ToString()
+                             + " having a value of " + CollectionList.SelectedValue;
+            }
         }
     }
 }

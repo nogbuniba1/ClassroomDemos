@@ -16,7 +16,46 @@
 
         </div>
     </div>
+    <!--Validation controls
+        ErrorMEssage: Displays the error message in summary
+        ControlToValidate: which input controlthe validate belongs to
+        SetFocusOnError: places cursor on the field/control if invalid
+        ForeColor: message color
+        Display: handles whether control side messages appear and the location beside the control-->
+
+    <asp:RequiredFieldValidator ID="RequiredFieldFirstName" runat="server" ErrorMessage="First Name is Required" 
+        ControlToValidate="FirstName" SetFocusOnError="true" ForeColor="Firebrick" Display="None" ></asp:RequiredFieldValidator>
+
+    <asp:RequiredFieldValidator ID="RequiredFieldLastName" runat="server" ErrorMessage="Last Name is Required" 
+        ControlToValidate="LastName" SetFocusOnError="true" ForeColor="Firebrick" Display="None" ></asp:RequiredFieldValidator>
+
+    <asp:RequiredFieldValidator ID="RequiredFieldStreetAddress1" runat="server" ErrorMessage="Street Address1 is Required" 
+        ControlToValidate="StreetAddress1" SetFocusOnError="true" ForeColor="Firebrick" Display="None" ></asp:RequiredFieldValidator>
+
+    <asp:RequiredFieldValidator ID="RequiredFieldCity" runat="server" ErrorMessage="City is Required" 
+        ControlToValidate="City" SetFocusOnError="true" ForeColor="Firebrick" Display="None" ></asp:RequiredFieldValidator>
+
+    <asp:RequiredFieldValidator ID="RequiredFieldPostalCode" runat="server" ErrorMessage="Postal Code is Required" 
+        ControlToValidate="PostalCode" SetFocusOnError="true" ForeColor="Firebrick" Display="None" ></asp:RequiredFieldValidator>
+    <%-- ValidationExpression holds the pattern for the input string. Data has to match --%>
+    <asp:RegularExpressionValidator ID="RegularExpressionPostalCode" runat="server" ErrorMessage="Invalid Postal Code (T6T6T6)" 
+        ControlToValidate="PostalCode" SetFocusOnError="true" ForeColor="Firebrick" Display="None" 
+        ValidationExpression="[a-zA-Z][0-9][a-zA-Z][0-9][a-zA-Z][0-9]"></asp:RegularExpressionValidator>
+
+    <asp:RequiredFieldValidator ID="RequiredFieldEmailAddress" runat="server" ErrorMessage="Email Address is Required" 
+        ControlToValidate="EmailAddress" SetFocusOnError="true" ForeColor="Firebrick" Display="None" ></asp:RequiredFieldValidator>
+    <asp:RegularExpressionValidator ID="RegularExpressionEmailAddress" runat="server" ErrorMessage="Invalid EmailAddress" 
+        ControlToValidate="EmailAddress" SetFocusOnError="true" ForeColor="Firebrick" Display="None" 
+        ValidationExpression="^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$"></asp:RegularExpressionValidator>
+
+    <!--validation summary to display validation errors-->
+    <div class="row">
+    <asp:ValidationSummary ID="ValidationSummary1" runat="server" 
+        HeaderText="Correct the following concerns and resubmit." CssClass="alert alert-danger" />
+    </div>
+
     <div class="grid-form">
+
         <h3>Contest Entry</h3>
         <asp:Label ID="Label1" runat="server" Text="First Name"
                 AssociatedControlID="FirstName"></asp:Label>
@@ -78,8 +117,8 @@
             <asp:TextBox ID="CheckAnswer" runat="server" ></asp:TextBox>
         </p>
         <p>
-            <asp:Button ID="Submit" runat="server" Text="Submit"  />&nbsp;&nbsp;
-            <asp:Button ID="Clear" runat="server" Text="Clear"  />
+            <asp:Button ID="Submit" runat="server" Text="Submit" OnClick="Submit_Click"  />&nbsp;&nbsp;
+            <asp:Button ID="Clear" runat="server" Text="Clear" OnClick="Clear_Click" CausesValidation="False"  />
         </p>
                
         <asp:Label ID="Message" runat="server" Text="bob" ></asp:Label>
