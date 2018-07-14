@@ -178,6 +178,7 @@
     <Content Include="Bundle.config" />
     <Content Include="Site.Mobile.Master" />
     <Content Include="Web.sitemap" />
+    <Content Include="WebConnectionStrings.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
