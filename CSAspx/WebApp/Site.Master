@@ -50,11 +50,21 @@
                     <a class="navbar-brand" runat="server" href="~/">Application name</a>
                 </div>
                 <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
+                    <%--<ul class="nav navbar-nav">
                         <li><a runat="server" href="~/">Home</a></li>
                         <li><a runat="server" href="~/About">About</a></li>
                         <li><a runat="server" href="~/Contact">Contact</a></li>
-                    </ul>
+                    </ul>--%>
+                    <asp:Menu ID="Menu1" runat="server" DataSourceID="SiteMapNav" 
+                        Orientation="Horizontal" 
+                        StaticDisplayLevels="1"
+                        StaticMenuStyle-CssClass="nav nav-bar-nav" 
+                        StaticSelectedStyle-CssClass="active" 
+                        DynamicMenuStyle-CssClass="dropdown-menu" 
+                        IncludeStyleBlock="false" EnableTheming="false" 
+                        EnableViewState="false">
+                    </asp:Menu>
+                    <asp:SiteMapDataSource ID="SiteMapNav" runat="server" ShowStartingNode="false"/>
                 </div>
             </div>
         </div>
