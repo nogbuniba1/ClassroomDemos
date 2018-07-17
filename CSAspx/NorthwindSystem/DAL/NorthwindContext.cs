@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 #region Additional Namespaces
 using System.Data.Entity;
 using Nortthwind.Data.Entities;
+using Northwind.Data.Entities;
 #endregion
 
 namespace NorthwindSystem.DAL
@@ -32,6 +33,7 @@ namespace NorthwindSystem.DAL
         //This is done by using the Dbcontext - EntityFramework datatype - DbSet<T>
         //  where <T> is the data definition class
         public DbSet<Product> Products { get; set; }    //Product defines an entity while Products is a property
-
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Supplier> Suppliers { get; set; }
     }
 }

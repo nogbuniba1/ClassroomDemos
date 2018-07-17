@@ -34,9 +34,9 @@ namespace Nortthwind.Data.Entities
         public int? SupplierID { get; set; } //Foreign Key 
         public int? CategoryID { get; set; } //Foreign Key / "?" - means it is nullable field
         public string QuantityPerUnit { get; set; }
-        public decimal UnitPrice { get; set; }
-        public Int16? UnitInStock { get; set; }
-        public Int16? UnitOnOrder { get; set; }
+        public decimal? UnitPrice { get; set; }
+        public Int16? UnitsInStock { get; set; }
+        public Int16? UnitsOnOrder { get; set; }
         public Int16? ReorderLevel { get; set; }
         public bool Discontinued { get; set; }
 
