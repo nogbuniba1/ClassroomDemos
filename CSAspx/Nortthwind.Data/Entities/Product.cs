@@ -28,16 +28,33 @@ namespace Nortthwind.Data.Entities
         //e) PK properties are best defaulted to end in ID (Id)
         //f) Compound PKs are described using the Column(Order=n) annotation parameter where n = 1,2,3,4 etc (Physical order of SQL attributes)
 
-        [Key,DatabaseGenerated(DatabaseGeneratedOption.None)]
+
+    //Validation can be done on your individual property of your entity
+
+        [Key]
         public int ProductID {get; set;}
+
+        [Required(ErrorMessage = "Product name is required")]
+        [StringLength(40, ErrorMessage ="Product name is limited to 40 Characters")]
         public string ProductName { get; set; }
         public int? SupplierID { get; set; } //Foreign Key 
         public int? CategoryID { get; set; } //Foreign Key / "?" - means it is nullable field
+
+        [StringLength(20, ErrorMessage = "Quantity per unit is limited to 20 characters")]
         public string QuantityPerUnit { get; set; }
+
+        [Range(0.00,double.MaxValue,ErrorMessage ="Invalid Price")]
         public decimal? UnitPrice { get; set; }
+
+        [Range(0.0, double.MaxValue, ErrorMessage ="Invalid Unit in Stock")]
         public Int16? UnitsInStock { get; set; }
+
+        [Range(0.0, double.MaxValue, ErrorMessage = "Invalid Unit on Order")]
         public Int16? UnitsOnOrder { get; set; }
+
+        [Range(0.0, double.MaxValue, ErrorMessage = "Invalid ReOrder Level")]
         public Int16? ReorderLevel { get; set; }
+
         public bool Discontinued { get; set; }
 
         //Sometimes, you will want another property in your class that will return a non-attribute value to the user
