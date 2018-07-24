@@ -203,7 +203,123 @@ namespace WebApp.SamplePages
 
         protected void Add_Click(object sender, EventArgs e)
         {
+            //Re-execute form validation
+            if(Page.IsValid)
+            {
+                //Other validation such as ensuring that selection has been made on our dropdown list
+                //For this example, we'll assume that supplier ID and Category ID are required
 
+                if(SupplierList.SelectedIndex == 0)
+                {
+                    errormsgs.Add("Supplier was not selected");
+                    LoadMessageDisplay(errormsgs, "alert alert-warning");
+                }
+                else if(CategoryList.SelectedIndex == 0)
+                {
+                    errormsgs.Add("Category was not selected");
+                    LoadMessageDisplay(errormsgs, "alert alert-warning");
+                }
+                else
+                {
+                    try
+                    {
+                        //Create a new instance of the entity to be added
+                        Product newProduct = new Product();
+
+                        //Extract the webdata and load your new instance
+                        newProduct.ProductName = ProductName.Text;
+                        newProduct.SupplierID = int.Parse(SupplierList.SelectedValue);
+                        newProduct.CategoryID = int.Parse(CategoryList.SelectedValue);
+                        newProduct.QuantityPerUnit = QuantityPerUnit.Text == null ? null: QuantityPerUnit.Text;
+                        if(string.IsNullOrEmpty(UnitPrice.Text))
+                        {
+                            newProduct.UnitPrice = null;
+                        }
+                        else
+                        {
+                            newProduct.UnitPrice = decimal.Parse(UnitPrice.Text);
+                        }
+
+                        if (string.IsNullOrEmpty(UnitsInStock.Text))
+                        {
+                            newProduct.UnitsInStock = null;
+                        }
+                        else
+                        {
+                            newProduct.UnitsInStock = Int16.Parse(UnitsInStock.Text);
+                        }
+
+                        if (string.IsNullOrEmpty(UnitsOnOrder.Text))
+                        {
+                            newProduct.UnitsOnOrder = null;
+                        }
+                        else
+                        {
+                            newProduct.UnitsOnOrder = Int16.Parse(UnitsOnOrder.Text);
+                        }
+
+                        if (string.IsNullOrEmpty(ReorderLevel.Text))
+                        {
+                            newProduct.ReorderLevel = null;
+                        }
+                        else
+                        {
+                            newProduct.ReorderLevel = Int16.Parse(ReorderLevel.Text);
+                        }
+
+                        //For discontinued, logically one would assume, you would not add a discontinued product to your list.
+                            //Therefore, this field will logically be false on the add.
+                            //newProduct.Discontinued = false; 
+                        newProduct.Discontinued = Discontinued.Checked;
+                        //connect to the system (BLL)
+                        //Issue your call and check results
+                        ProductController sysmgr = new ProductController();
+                        int newproductid = sysmgr.Products_Add(newProduct);
+
+                        ProductID.Text = newproductid.ToString();
+
+                        //refresh the product list to show the new product in the list
+                        BindProductList();
+
+                        //Point to the new product in the list
+                        ProductList.SelectedValue = ProductID.Text;
+
+                        //Communicate to the user
+                        errormsgs.Add("Product has been added");
+                        LoadMessageDisplay(errormsgs, "alert alert-success");
+                    }
+                    catch (DbUpdateException ex)
+                    {
+                        UpdateException updateException = (UpdateException)ex.InnerException;
+                        if (updateException.InnerException != null)
+                        {
+                            errormsgs.Add(updateException.InnerException.Message.ToString());
+                        }
+                        else
+                        {
+                            errormsgs.Add(updateException.Message);
+                        }
+                        LoadMessageDisplay(errormsgs, "alert alert-danger");
+                    }
+                    catch (DbEntityValidationException ex)
+                    {
+                        foreach (var entityValidationErrors in ex.EntityValidationErrors)
+                        {
+                            foreach (var validationError in entityValidationErrors.ValidationErrors)
+                            {
+                                errormsgs.Add(validationError.ErrorMessage);
+                            }
+                        }
+                        LoadMessageDisplay(errormsgs, "alert alert-danger");
+                    }
+                    catch (Exception ex)
+                    {
+                        errormsgs.Add(GetInnerException(ex).ToString());
+                        LoadMessageDisplay(errormsgs, "alert alert-danger");
+                    }
+
+                }
+            }
         }
 
         protected void Update_Click(object sender, EventArgs e)
