@@ -1,0 +1,1 @@
+﻿This folder will hold the classes which will represent each View on the database.
