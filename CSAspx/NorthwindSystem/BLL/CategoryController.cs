@@ -17,7 +17,7 @@ namespace NorthwindSystem.BLL
             //this method will return all records from the SQL table "Categories".
             //This method will first create a transaction code block which uses the DAL context class.
             //The context class has a DbSet<Category> property for referencing the SQL table
-            //The property works with EntityFramework ti retrieve the data
+            //The property works with EntityFramework to retrieve the data
             public List<Category> Categories_List()
             {
                 using (var context = new NorthwindContext())
