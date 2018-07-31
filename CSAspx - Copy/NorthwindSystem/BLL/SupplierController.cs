@@ -37,5 +37,24 @@ namespace NorthwindSystem.BLL
                 return results.ToList();
             }
         }
+        public Supplier Suppliers_GetSupplier(int supplierid)
+        {
+            using (var context = new NorthwindContext())
+            {
+                return context.Suppliers.Find(supplierid);
+            }
+        }
+
+
+        public List<Supplier> Suppliers_GetByPartialCompanyName(string partialname)
+        {
+            using (var context = new NorthwindContext())
+            {
+                IEnumerable<Supplier> results =
+                           context.Database.SqlQuery<Supplier>("Suppliers_GetByPartialCompanyName @PartialName",
+                                           new SqlParameter("PartialName", partialname));
+                return results.ToList();
+            }
+        }
     }
 }

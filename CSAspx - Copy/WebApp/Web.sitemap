@@ -10,6 +10,7 @@
       <!-- A siteMapNode here, is an item on your drop-down menu-->
       <siteMapNode url="~/SamplePages/Query.aspx" title="Pkey Query"  description="" />
       <siteMapNode url="~/SamplePages/FilterSearches.aspx" title="Filter Searches"  description="" />
+      <siteMapNode url="~/SamplePages/CRUDFilterSearch.aspx" title="CRUD Filter Searches"  description="" />
     </siteMapNode>
     <siteMapNode url="~/About.aspx" title="About"  description="" />
     <siteMapNode url="~/Contact.aspx" title="Contact"  description="" />
