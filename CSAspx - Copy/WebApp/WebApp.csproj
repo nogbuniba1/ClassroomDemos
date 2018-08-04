@@ -154,6 +154,7 @@
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="SamplePages\CRUDFilterSearch.aspx" />
     <Content Include="SamplePages\FilterSearches.aspx" />
+    <Content Include="SamplePages\MultiRecordODS.aspx" />
     <Content Include="SamplePages\Query.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -188,7 +189,9 @@
     <Content Include="Web.config" />
     <Content Include="Bundle.config" />
     <Content Include="Site.Mobile.Master" />
-    <Content Include="Web.sitemap" />
+    <Content Include="Web.sitemap">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="WebConnectionStrings.config" />
   </ItemGroup>
   <ItemGroup>
@@ -232,6 +235,13 @@
     </Compile>
     <Compile Include="SamplePages\FilterSearches.aspx.designer.cs">
       <DependentUpon>FilterSearches.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SamplePages\MultiRecordODS.aspx.cs">
+      <DependentUpon>MultiRecordODS.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SamplePages\MultiRecordODS.aspx.designer.cs">
+      <DependentUpon>MultiRecordODS.aspx</DependentUpon>
     </Compile>
     <Compile Include="SamplePages\Query.aspx.cs">
       <DependentUpon>Query.aspx</DependentUpon>

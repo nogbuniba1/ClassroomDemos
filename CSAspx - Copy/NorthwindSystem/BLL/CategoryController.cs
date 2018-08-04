@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,13 +8,15 @@ using System.Threading.Tasks;
 #region Additional Namespaces
 using Northwind.Data.Entities;
 using NorthwindSystem.DAL;
+using System.ComponentModel; //Used to expose the class and methods for ODS
 #endregion
 
 namespace NorthwindSystem.BLL
 {
-    
+    [DataObject]
     public class CategoryController
     {
+        [DataObjectMethod(DataObjectMethodType.Select, false)] //There can only be one type can be a default (i.e be true)
         public List<Category> Categories_List()
         {
             //need to connect to the Context class
@@ -25,6 +28,17 @@ namespace NorthwindSystem.BLL
                 return context.Categories.ToList();
             }
         }
+
+        //this method will return a specific record from the sql Category table based on the Primary Key
+        [DataObjectMethod(DataObjectMethodType.Select, false)]
+        public Category Categories_GetCategory(int categoryId)
+        {
+            using (var context = new NorthwindContext())
+            {
+                return context.Categories.Find(categoryId);
+            }
+        }
+
 
     }
 }

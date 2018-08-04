@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -9,12 +10,15 @@ using System.Threading.Tasks;
 using Northwind.Data.Entities;
 using Northwind.Data.Views;
 using NorthwindSystem.DAL;
+using System.ComponentModel;
 #endregion 
 
 namespace NorthwindSystem.BLL
 {
+    [DataObject]
     public class SupplierController
     {
+        [DataObjectMethod(DataObjectMethodType.Select, false)]
         public List<Supplier> Suppliers_List()
         {
             //need to connect to the Context class
@@ -27,6 +31,7 @@ namespace NorthwindSystem.BLL
             }
         }
 
+        
         public List<SupplierCategories> Suppliers_GetCategories(int suppilerid)
         {
             using (var context = new NorthwindContext())
@@ -37,6 +42,8 @@ namespace NorthwindSystem.BLL
                 return results.ToList();
             }
         }
+
+        
         public Supplier Suppliers_GetSupplier(int supplierid)
         {
             using (var context = new NorthwindContext())

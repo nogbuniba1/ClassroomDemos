@@ -8,10 +8,12 @@ using System.Threading.Tasks;
 using Northwind.Data.Entities;
 using NorthwindSystem.DAL;
 using System.Data.SqlClient;
+using System.ComponentModel;
 #endregion
 
 namespace NorthwindSystem.BLL
 {
+    [DataObject]
     public class ProductController
     {
         //this method will return all records from the SQL table Products
@@ -19,6 +21,7 @@ namespace NorthwindSystem.BLL
         //the Context class has a DbSet<Product> property for referencing the SQL table
         //The property works with EntityFramework to retrieve the data
 
+        [DataObjectMethod(DataObjectMethodType.Select, false)]
         public List<Product> Products_List()
         {
             using (var context = new NorthwindContext())
@@ -122,6 +125,7 @@ namespace NorthwindSystem.BLL
             }
         }
 
+        [DataObjectMethod(DataObjectMethodType.Select, false)]
         public List<Product> Products_GetByCategories(int categoryid)
         {
             using (var context = new NorthwindContext())
@@ -164,6 +168,7 @@ namespace NorthwindSystem.BLL
             }
         }
 
+        [DataObjectMethod(DataObjectMethodType.Select, false)]
         public List<Product> Products_GetByCategoryAndName(int category, string partialname)
         {
             using (var context = new NorthwindContext())
